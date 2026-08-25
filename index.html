@@ -209,25 +209,43 @@
     overscroll-behavior: contain;
     background: #e9dfc9;
   }
+  .page.menu-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: url("菜单图.jpg") center/cover no-repeat;
+    filter: blur(16px) brightness(0.9);
+    transform: scale(1.12);
+    opacity: 0.75;
+    pointer-events: none;
+  }
 
   .menu-top {
-    position: sticky;
-    top: 0;
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 9;
-    background: linear-gradient(180deg, #e9dfc9 80%, rgba(233, 223, 201, 0));
-    padding: 12px 14px 14px;
+    background: rgba(43, 38, 32, 0.40);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 8px 18px;
+    border-radius: 999px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 14px;
-    font-size: 13px;
+    gap: 12px;
+    font-size: 12px;
     letter-spacing: 0.2em;
-    color: #5c5345;
+    color: #f3ecdd;
+    box-shadow: 0 4px 16px rgba(43, 38, 32, 0.28);
+    pointer-events: none;
   }
-  .menu-top strong { color: var(--cinnabar); font-weight: 800; }
+  .menu-top strong { color: var(--gold); font-weight: 800; }
 
   .menu-canvas {
     position: relative;
+    z-index: 1;
     width: 100%;
     max-width: 720px;
     margin: 0 auto;
@@ -238,25 +256,23 @@
     display: block;
     width: 100%;
     height: auto;
-    border-radius: 6px 6px 0 0;
-    box-shadow: 0 -6px 24px rgba(43, 38, 32, 0.16);
   }
 
   /* 价格后的加号按钮 */
   .plus-btn {
     position: absolute;
     z-index: 3;
-    width: 26px;
-    height: 26px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background: #16a5a6;
     color: #fff;
-    font-size: 15px;
+    font-size: 9px;
     font-weight: 700;
     line-height: 1;
     display: grid;
     place-items: center;
-    box-shadow: 0 2px 7px rgba(22, 165, 166, 0.45);
+    box-shadow: 0 1px 5px rgba(22, 165, 166, 0.45);
     transform: translate(-50%, -50%);
     transition: transform .18s var(--ease-out), background .18s var(--ease-out);
   }
@@ -265,19 +281,19 @@
   .plus-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .plus-btn .ptag {
     position: absolute;
-    top: -6px;
-    right: -6px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 4px;
+    top: -4px;
+    right: -4px;
+    min-width: 13px;
+    height: 13px;
+    padding: 0 2px;
     border-radius: 999px;
     background: var(--ink);
     color: var(--paper);
-    font-size: 11px;
+    font-size: 8px;
     font-weight: 800;
     display: grid;
     place-items: center;
-    box-shadow: 0 2px 6px rgba(43, 38, 32, 0.4);
+    box-shadow: 0 1px 4px rgba(43, 38, 32, 0.4);
     transform: scale(0);
     transition: transform .25s var(--ease-out);
     pointer-events: none;
@@ -286,7 +302,7 @@
   .plus-btn.pulsed { animation: plus-pulse .5s var(--ease-out); }
   @keyframes plus-pulse {
     0% { box-shadow: 0 0 0 0 rgba(22, 165, 166, 0.5); }
-    100% { box-shadow: 0 0 0 12px rgba(22, 165, 166, 0); }
+    100% { box-shadow: 0 0 0 10px rgba(22, 165, 166, 0); }
   }
 
   /* ============ 底部结算栏 ============ */
@@ -527,7 +543,7 @@
 
   @media (max-width: 480px) {
     .cover-enter { padding: 15px 0; font-size: 16px; bottom: 10%; }
-    .plus-btn { width: 24px; height: 24px; font-size: 14px; }
+    .plus-btn { width: 12px; height: 12px; font-size: 8px; }
     .cart-bar { gap: 10px; padding-left: 12px; }
     .checkout-btn { padding: 12px 18px; font-size: 14px; }
     .bill-inner { padding: 26px 18px calc(30px + env(safe-area-inset-bottom)); }
@@ -659,37 +675,37 @@
 
   /* 菜品数据：cx/cy 为价格右侧加号按钮中心（相对菜单图百分比），同列 cx 对齐 */
   const DISHES = [
-    { id: "d01", name: "墨脱石锅鸡",   price: 128, cx: 47.5, cy: 47.2 },
-    { id: "d02", name: "西湖醋鱼",     price: 108, cx: 47.5, cy: 50.0 },
-    { id: "d03", name: "白灼河虾",     price: 66,  cx: 47.5, cy: 52.7 },
-    { id: "d04", name: "田螺酿肉",     price: 58,  cx: 47.5, cy: 55.6 },
-    { id: "d05", name: "蟹黄猪油饭",   price: 65,  cx: 47.5, cy: 58.6 },
-    { id: "d06", name: "清炒竹笋",     price: 28,  cx: 47.5, cy: 63.5 },
-    { id: "d07", name: "荷叶鸡",       price: 45,  cx: 47.5, cy: 66.4 },
-    { id: "d08", name: "龙井虾仁",     price: 88,  cx: 47.5, cy: 69.0 },
-    { id: "d09", name: "清炒时蔬",     price: 24,  cx: 47.5, cy: 71.7 },
-    { id: "d10", name: "麻婆豆腐",     price: 30,  cx: 47.5, cy: 74.2 },
-    { id: "d11", name: "锅包肉",       price: 58,  cx: 47.5, cy: 77.2 },
-    { id: "d12", name: "小鸡炖蘑菇",   price: 65,  cx: 47.5, cy: 79.8 },
-    { id: "d13", name: "地三鲜",       price: 42,  cx: 47.5, cy: 82.4 },
-    { id: "d14", name: "尖椒干豆腐",   price: 22,  cx: 47.5, cy: 84.7 },
-    { id: "d15", name: "酸菜猪肉炖粉条", price: 42, cx: 47.5, cy: 87.4 },
-    { id: "d16", name: "炸鸡架",       price: 18,  cx: 47.5, cy: 90.0 },
+    { id: "d01", name: "墨脱石锅鸡",   price: 128, cx: 50, cy: 47.2 },
+    { id: "d02", name: "西湖醋鱼",     price: 108, cx: 50, cy: 50.0 },
+    { id: "d03", name: "白灼河虾",     price: 66,  cx: 50, cy: 52.7 },
+    { id: "d04", name: "田螺酿肉",     price: 58,  cx: 50, cy: 55.6 },
+    { id: "d05", name: "蟹黄猪油饭",   price: 65,  cx: 50, cy: 58.6 },
+    { id: "d06", name: "清炒竹笋",     price: 28,  cx: 50, cy: 63.5 },
+    { id: "d07", name: "荷叶鸡",       price: 45,  cx: 50, cy: 66.4 },
+    { id: "d08", name: "龙井虾仁",     price: 88,  cx: 50, cy: 69.0 },
+    { id: "d09", name: "清炒时蔬",     price: 24,  cx: 50, cy: 71.7 },
+    { id: "d10", name: "麻婆豆腐",     price: 30,  cx: 50, cy: 74.2 },
+    { id: "d11", name: "锅包肉",       price: 58,  cx: 50, cy: 77.2 },
+    { id: "d12", name: "小鸡炖蘑菇",   price: 65,  cx: 50, cy: 79.8 },
+    { id: "d13", name: "地三鲜",       price: 42,  cx: 50, cy: 82.4 },
+    { id: "d14", name: "尖椒干豆腐",   price: 22,  cx: 50, cy: 84.7 },
+    { id: "d15", name: "酸菜猪肉炖粉条", price: 42, cx: 50, cy: 87.4 },
+    { id: "d16", name: "炸鸡架",       price: 18,  cx: 50, cy: 90.0 },
 
-    { id: "d17", name: "蟹盖八宝饭",   price: 68,  cx: 91.0, cy: 53.0 },
-    { id: "d18", name: "青椒肉丝炒饭", price: 48,  cx: 91.0, cy: 55.9 },
-    { id: "d19", name: "辣排骨火锅",   price: 98,  cx: 91.0, cy: 58.7 },
-    { id: "d20", name: "农家大米饭",   price: 3,   cx: 91.0, cy: 61.6 },
-    { id: "d21", name: "凉拌黄瓜",     price: 10,  cx: 91.0, cy: 64.4 },
-    { id: "d22", name: "馒头",         price: 2,   cx: 91.0, cy: 68.7 },
-    { id: "d23", name: "蛋炒饭",       price: 12,  cx: 91.0, cy: 71.2 },
-    { id: "d24", name: "远山净儿",     price: 48,  cx: 91.0, cy: 78.1 },
-    { id: "d25", name: "农夫山泉",     price: 2,   cx: 91.0, cy: 80.9 },
-    { id: "d26", name: "可口可乐",     price: 4,   cx: 91.0, cy: 83.2 },
-    { id: "d27", name: "大窑汽水",     price: 6,   cx: 91.0, cy: 85.9 },
+    { id: "d17", name: "蟹盖八宝饭",   price: 68,  cx: 93, cy: 53.0 },
+    { id: "d18", name: "青椒肉丝炒饭", price: 48,  cx: 93, cy: 55.9 },
+    { id: "d19", name: "辣排骨火锅",   price: 98,  cx: 93, cy: 58.7 },
+    { id: "d20", name: "农家大米饭",   price: 3,   cx: 93, cy: 61.6 },
+    { id: "d21", name: "凉拌黄瓜",     price: 10,  cx: 93, cy: 64.4 },
+    { id: "d22", name: "馒头",         price: 2,   cx: 93, cy: 68.7 },
+    { id: "d23", name: "蛋炒饭",       price: 12,  cx: 93, cy: 71.2 },
+    { id: "d24", name: "远山净儿",     price: 48,  cx: 93, cy: 78.1 },
+    { id: "d25", name: "农夫山泉",     price: 2,   cx: 93, cy: 80.9 },
+    { id: "d26", name: "可口可乐",     price: 4,   cx: 93, cy: 83.2 },
+    { id: "d27", name: "大窑汽水",     price: 6,   cx: 93, cy: 85.9 },
 
-    { id: "d28", name: "爆炒海猴子",   price: 88,  cx: 59.5, cy: 93.5 },
-    { id: "d29", name: "野鸡脖子",     price: 390, cx: 85.5, cy: 92.7 }
+    { id: "d28", name: "爆炒海猴子",   price: 88,  cx: 62, cy: 93.5 },
+    { id: "d29", name: "野鸡脖子",     price: 390, cx: 88, cy: 92.7 }
   ];
 
   const dishMap = new Map(DISHES.map(d => [d.id, d]));
