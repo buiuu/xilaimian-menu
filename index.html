@@ -205,6 +205,9 @@
   .page.menu-page {
     z-index: 1;
     transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow-y: auto;
     overscroll-behavior: contain;
     background: #e9dfc9;
@@ -248,7 +251,7 @@
     z-index: 1;
     width: 100%;
     max-width: 720px;
-    margin: 0 auto;
+    margin: auto;
     user-select: none;
   }
 
@@ -262,9 +265,11 @@
   .plus-btn {
     position: absolute;
     z-index: 3;
-    width: 16px;
-    height: 16px;
-    background: transparent;
+    width: 14px;
+    height: 14px;
+    background: rgba(255,255,255,0.30);
+    border: 1.5px solid rgba(22,165,166,0.9);
+    border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: transform .18s var(--ease-out);
   }
@@ -277,18 +282,18 @@
     border-radius: 1px;
     transform: translate(-50%, -50%);
   }
-  .plus-btn::before { width: 10px; height: 1.6px; }
-  .plus-btn::after { width: 1.6px; height: 10px; }
+  .plus-btn::before { width: 8px; height: 1.5px; }
+  .plus-btn::after { width: 1.5px; height: 8px; }
   .plus-btn:hover { transform: translate(-50%, -50%) scale(1.15); }
   .plus-btn:hover::before, .plus-btn:hover::after { background: #0f8a8b; }
   .plus-btn:active { transform: translate(-50%, -50%) scale(0.9); }
   .plus-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .plus-btn .ptag {
     position: absolute;
-    top: -4px;
-    right: -4px;
-    min-width: 13px;
-    height: 13px;
+    top: -3px;
+    right: -3px;
+    min-width: 11px;
+    height: 11px;
     padding: 0 2px;
     border-radius: 999px;
     background: var(--ink);
@@ -547,7 +552,7 @@
 
   @media (max-width: 480px) {
     .cover-enter { padding: 15px 0; font-size: 16px; bottom: 10%; }
-    .plus-btn { width: 15px; height: 15px; font-size: 14px; }
+    .plus-btn { width: 13px; height: 13px; }
     .cart-bar { gap: 10px; padding-left: 12px; }
     .checkout-btn { padding: 12px 18px; font-size: 14px; }
     .bill-inner { padding: 26px 18px calc(30px + env(safe-area-inset-bottom)); }
@@ -679,37 +684,37 @@
 
   /* 菜品数据：cx/cy 为价格右侧加号按钮中心（相对菜单图百分比），同列 cx 对齐 */
   const DISHES = [
-    { id: "d01", name: "墨脱石锅鸡",   price: 128, cx: 50, cy: 45.7 },
-    { id: "d02", name: "西湖醋鱼",     price: 108, cx: 50, cy: 48.5 },
-    { id: "d03", name: "白灼河虾",     price: 66,  cx: 50, cy: 51.2 },
-    { id: "d04", name: "田螺酿肉",     price: 58,  cx: 50, cy: 54.1 },
-    { id: "d05", name: "蟹黄猪油饭",   price: 65,  cx: 50, cy: 57.1 },
-    { id: "d06", name: "清炒竹笋",     price: 28,  cx: 50, cy: 62.0 },
-    { id: "d07", name: "荷叶鸡",       price: 45,  cx: 50, cy: 64.9 },
-    { id: "d08", name: "龙井虾仁",     price: 88,  cx: 50, cy: 67.5 },
-    { id: "d09", name: "清炒时蔬",     price: 24,  cx: 50, cy: 70.2 },
-    { id: "d10", name: "麻婆豆腐",     price: 30,  cx: 50, cy: 72.7 },
-    { id: "d11", name: "锅包肉",       price: 58,  cx: 50, cy: 75.7 },
-    { id: "d12", name: "小鸡炖蘑菇",   price: 65,  cx: 50, cy: 78.3 },
-    { id: "d13", name: "地三鲜",       price: 42,  cx: 50, cy: 80.9 },
-    { id: "d14", name: "尖椒干豆腐",   price: 22,  cx: 50, cy: 83.2 },
-    { id: "d15", name: "酸菜猪肉炖粉条", price: 42, cx: 50, cy: 85.9 },
-    { id: "d16", name: "炸鸡架",       price: 18,  cx: 50, cy: 88.5 },
+    { id: "d01", name: "墨脱石锅鸡",   price: 128, cx: 50, cy: 43.1 },
+    { id: "d02", name: "西湖醋鱼",     price: 108, cx: 50, cy: 45.9 },
+    { id: "d03", name: "白灼河虾",     price: 66,  cx: 50, cy: 48.6 },
+    { id: "d04", name: "田螺酿肉",     price: 58,  cx: 50, cy: 51.5 },
+    { id: "d05", name: "蟹黄猪油饭",   price: 65,  cx: 50, cy: 54.5 },
+    { id: "d06", name: "清炒竹笋",     price: 28,  cx: 50, cy: 59.4 },
+    { id: "d07", name: "荷叶鸡",       price: 45,  cx: 50, cy: 62.300000000000004 },
+    { id: "d08", name: "龙井虾仁",     price: 88,  cx: 50, cy: 64.9 },
+    { id: "d09", name: "清炒时蔬",     price: 24,  cx: 50, cy: 67.60000000000001 },
+    { id: "d10", name: "麻婆豆腐",     price: 30,  cx: 50, cy: 70.10000000000001 },
+    { id: "d11", name: "锅包肉",       price: 58,  cx: 50, cy: 73.10000000000001 },
+    { id: "d12", name: "小鸡炖蘑菇",   price: 65,  cx: 50, cy: 75.7 },
+    { id: "d13", name: "地三鲜",       price: 42,  cx: 50, cy: 78.30000000000001 },
+    { id: "d14", name: "尖椒干豆腐",   price: 22,  cx: 50, cy: 80.60000000000001 },
+    { id: "d15", name: "酸菜猪肉炖粉条", price: 42, cx: 50, cy: 83.30000000000001 },
+    { id: "d16", name: "炸鸡架",       price: 18,  cx: 50, cy: 85.9 },
 
-    { id: "d17", name: "蟹盖八宝饭",   price: 68,  cx: 93, cy: 51.5 },
-    { id: "d18", name: "青椒肉丝炒饭", price: 48,  cx: 93, cy: 54.4 },
-    { id: "d19", name: "辣排骨火锅",   price: 98,  cx: 93, cy: 57.2 },
-    { id: "d20", name: "农家大米饭",   price: 3,   cx: 93, cy: 60.1 },
-    { id: "d21", name: "凉拌黄瓜",     price: 10,  cx: 93, cy: 62.900000000000006 },
-    { id: "d22", name: "馒头",         price: 2,   cx: 93, cy: 67.2 },
-    { id: "d23", name: "蛋炒饭",       price: 12,  cx: 93, cy: 69.7 },
-    { id: "d24", name: "远山净儿",     price: 48,  cx: 93, cy: 76.6 },
-    { id: "d25", name: "农夫山泉",     price: 2,   cx: 93, cy: 79.4 },
-    { id: "d26", name: "可口可乐",     price: 4,   cx: 93, cy: 81.7 },
-    { id: "d27", name: "大窑汽水",     price: 6,   cx: 93, cy: 84.4 },
+    { id: "d17", name: "蟹盖八宝饭",   price: 68,  cx: 93, cy: 48.9 },
+    { id: "d18", name: "青椒肉丝炒饭", price: 48,  cx: 93, cy: 51.8 },
+    { id: "d19", name: "辣排骨火锅",   price: 98,  cx: 93, cy: 54.6 },
+    { id: "d20", name: "农家大米饭",   price: 3,   cx: 93, cy: 57.5 },
+    { id: "d21", name: "凉拌黄瓜",     price: 10,  cx: 93, cy: 60.300000000000004 },
+    { id: "d22", name: "馒头",         price: 2,   cx: 93, cy: 64.60000000000001 },
+    { id: "d23", name: "蛋炒饭",       price: 12,  cx: 93, cy: 67.10000000000001 },
+    { id: "d24", name: "远山净儿",     price: 48,  cx: 93, cy: 74.0 },
+    { id: "d25", name: "农夫山泉",     price: 2,   cx: 93, cy: 76.80000000000001 },
+    { id: "d26", name: "可口可乐",     price: 4,   cx: 93, cy: 79.10000000000001 },
+    { id: "d27", name: "大窑汽水",     price: 6,   cx: 93, cy: 81.80000000000001 },
 
-    { id: "d28", name: "爆炒海猴子",   price: 88,  cx: 62, cy: 92.0 },
-    { id: "d29", name: "野鸡脖子",     price: 390, cx: 88, cy: 91.2 }
+    { id: "d28", name: "爆炒海猴子",   price: 88,  cx: 62, cy: 89.4 },
+    { id: "d29", name: "野鸡脖子",     price: 390, cx: 88, cy: 88.60000000000001 }
   ];
 
   const dishMap = new Map(DISHES.map(d => [d.id, d]));
