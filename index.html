@@ -261,37 +261,21 @@
     height: auto;
   }
 
-  /* 价格后的加号按钮：用线条绘制，视觉精确居中 */
+  /* 菜品热区：点击菜名行加购，透明无样式，hover 微高亮 */
   .plus-btn {
     position: absolute;
     z-index: 3;
-    width: 14px;
-    height: 14px;
-    background: rgba(255,255,255,0.30);
-    border: 1.5px solid rgba(22,165,166,0.9);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform .18s var(--ease-out);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background .15s;
   }
-  .plus-btn::before, .plus-btn::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    background: #16a5a6;
-    border-radius: 1px;
-    transform: translate(-50%, -50%);
-  }
-  .plus-btn::before { width: 8px; height: 1.5px; }
-  .plus-btn::after { width: 1.5px; height: 8px; }
-  .plus-btn:hover { transform: translate(-50%, -50%) scale(1.15); }
-  .plus-btn:hover::before, .plus-btn:hover::after { background: #0f8a8b; }
-  .plus-btn:active { transform: translate(-50%, -50%) scale(0.9); }
-  .plus-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .plus-btn:hover { background: rgba(22, 165, 166, 0.12); }
+  .plus-btn:active { background: rgba(22, 165, 166, 0.22); }
+  .plus-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
   .plus-btn .ptag {
     position: absolute;
-    top: -3px;
-    right: -3px;
+    z-index: 4;
     min-width: 11px;
     height: 11px;
     padding: 0 2px;
@@ -303,11 +287,11 @@
     display: grid;
     place-items: center;
     box-shadow: 0 1px 4px rgba(43, 38, 32, 0.4);
-    transform: scale(0);
+    transform: translate(0, -50%) scale(0);
     transition: transform .25s var(--ease-out);
     pointer-events: none;
   }
-  .plus-btn .ptag.show { transform: scale(1); }
+  .plus-btn .ptag.show { transform: translate(0, -50%) scale(1); }
   .plus-btn.pulsed { animation: plus-pulse .5s var(--ease-out); }
   @keyframes plus-pulse {
     0% { box-shadow: 0 0 0 0 rgba(22, 165, 166, 0.5); }
@@ -724,15 +708,47 @@
   const $ = (sel) => document.querySelector(sel);
   const menuCanvas = $("#menuCanvas");
 
-  /* ---------- 渲染加号按钮 ---------- */
+  /* ---------- 渲染菜品热区（点击菜名行加购） ---------- */
+  const leftCol = DISHES.filter(d => d.cx <= 50).sort((a, b) => a.cy - b.cy);
+  const rightCol = DISHES.filter(d => d.cx > 50 && d.id !== "d28" && d.id !== "d29").sort((a, b) => a.cy - b.cy);
+
+  function rowBounds(col, i) {
+    const cur = col[i];
+    const prev = i > 0 ? col[i - 1] : null;
+    const next = i < col.length - 1 ? col[i + 1] : null;
+    const top = prev ? (prev.cy + cur.cy) / 2 : Math.max(0, cur.cy - 2.8);
+    const bottom = next ? (cur.cy + next.cy) / 2 : Math.min(100, cur.cy + 2.8);
+    return { top, bottom };
+  }
+
   DISHES.forEach(d => {
     const btn = document.createElement("button");
     btn.className = "plus-btn";
     btn.dataset.id = d.id;
     btn.setAttribute("aria-label", "添加" + d.name + "，价格" + d.price + "元");
-    btn.style.left = d.cx + "%";
-    btn.style.top = d.cy + "%";
-    btn.innerHTML = `<span>+</span><span class="ptag">0</span>`;
+    let box;
+    if (d.id === "d28") {
+      box = { left: 0, width: 66, top: 85.2, bottom: 92.0 };
+    } else if (d.id === "d29") {
+      box = { left: 66, width: 34, top: 85.2, bottom: 92.0 };
+    } else {
+      const col = d.cx <= 50 ? leftCol : rightCol;
+      const i = col.indexOf(d);
+      const b = rowBounds(col, i);
+      box = d.cx <= 50
+        ? { left: 0, width: 66, top: b.top, bottom: b.bottom }
+        : { left: 34, width: 66, top: b.top, bottom: b.bottom };
+    }
+    btn.style.left = box.left + "%";
+    btn.style.top = box.top + "%";
+    btn.style.width = box.width + "%";
+    btn.style.height = (box.bottom - box.top) + "%";
+    const tag = document.createElement("span");
+    tag.className = "ptag";
+    tag.textContent = "0";
+    tag.style.left = (d.cx + 4) + "%";
+    tag.style.top = d.cy + "%";
+    btn.appendChild(tag);
     btn.addEventListener("click", () => addDish(d.id, btn));
     menuCanvas.appendChild(btn);
   });
@@ -744,9 +760,6 @@
     cart.set(id, (cart.get(id) || 0) + 1);
     updateTag(id);
     updateCartBar();
-    btn.classList.remove("pulsed");
-    void btn.offsetWidth;
-    btn.classList.add("pulsed");
     showBubble(d, btn);
   }
 
@@ -762,7 +775,8 @@
   let bubbleTimer = null;
   function showBubble(d, btn) {
     const b = $("#bubble");
-    const r = btn.getBoundingClientRect();
+    const el = btn.querySelector(".ptag") || btn;
+    const r = el.getBoundingClientRect();
     b.textContent = `+1 · ${d.name} ¥${d.price}`;
     b.style.left = (r.left + r.width / 2) + "px";
     b.style.top = (r.top - 6) + "px";
