@@ -262,21 +262,19 @@
   .plus-btn {
     position: absolute;
     z-index: 3;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: #16a5a6;
-    color: #fff;
-    font-size: 9px;
-    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    background: transparent;
+    color: #16a5a6;
+    font-size: 15px;
+    font-weight: 900;
     line-height: 1;
     display: grid;
     place-items: center;
-    box-shadow: 0 1px 5px rgba(22, 165, 166, 0.45);
     transform: translate(-50%, -50%);
-    transition: transform .18s var(--ease-out), background .18s var(--ease-out);
+    transition: transform .18s var(--ease-out), color .18s var(--ease-out);
   }
-  .plus-btn:hover { background: #0f8a8b; transform: translate(-50%, -50%) scale(1.12); }
+  .plus-btn:hover { color: #0f8a8b; transform: translate(-50%, -50%) scale(1.15); }
   .plus-btn:active { transform: translate(-50%, -50%) scale(0.9); }
   .plus-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .plus-btn .ptag {
@@ -543,7 +541,7 @@
 
   @media (max-width: 480px) {
     .cover-enter { padding: 15px 0; font-size: 16px; bottom: 10%; }
-    .plus-btn { width: 12px; height: 12px; font-size: 8px; }
+    .plus-btn { width: 15px; height: 15px; font-size: 14px; }
     .cart-bar { gap: 10px; padding-left: 12px; }
     .checkout-btn { padding: 12px 18px; font-size: 14px; }
     .bill-inner { padding: 26px 18px calc(30px + env(safe-area-inset-bottom)); }
@@ -565,7 +563,7 @@
   <!-- 封面页 -->
   <section class="page cover-page" id="coverPage" aria-hidden="false">
     <div class="page-face">
-      <img class="cover-img" src="喜来眠封面.png" alt="喜来眠封面">
+      <img class="cover-img" src="喜来眠封面.jpg" alt="喜来眠封面">
       <button class="cover-enter" id="enterBtn">入 席</button>
       <div class="cover-hint">轻触翻页 · 进入菜单</div>
     </div>
