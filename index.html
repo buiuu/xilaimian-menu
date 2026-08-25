@@ -572,7 +572,7 @@
     <div class="menu-top">
       <span id="peopleShow">0 人用餐</span>
       <span>·</span>
-      <span>点 <strong>＋</strong> 加入点单</span>
+      <span>点 <strong>菜名</strong> 加购</span>
     </div>
     <div class="menu-canvas" id="menuCanvas">
       <img src="菜单图.jpg" alt="喜来眠菜单" id="menuImg">
@@ -728,16 +728,24 @@
     btn.setAttribute("aria-label", "添加" + d.name + "，价格" + d.price + "元");
     let box;
     if (d.id === "d28") {
-      box = { left: 0, width: 66, top: 85.2, bottom: 92.0 };
+      /* 爆炒海猴子：底部居中独立分区，避开上方炸鸡架价格带 */
+      box = { left: 34, width: 30, top: 86.5, bottom: 92.0 };
     } else if (d.id === "d29") {
-      box = { left: 66, width: 34, top: 85.2, bottom: 92.0 };
+      /* 野鸡脖子：底部右侧独立分区，与海猴子留间隙 */
+      box = { left: 68, width: 32, top: 86.5, bottom: 92.0 };
+    } else if (d.id === "d16") {
+      /* 炸鸡架：左列最后一行，行底截止到海猴子分区之上 */
+      const col = leftCol;
+      const i = col.indexOf(d);
+      const b = rowBounds(col, i);
+      box = { left: 0, width: 55, top: b.top, bottom: 86.0 };
     } else {
       const col = d.cx <= 50 ? leftCol : rightCol;
       const i = col.indexOf(d);
       const b = rowBounds(col, i);
       box = d.cx <= 50
-        ? { left: 0, width: 66, top: b.top, bottom: b.bottom }
-        : { left: 34, width: 66, top: b.top, bottom: b.bottom };
+        ? { left: 0, width: 55, top: b.top, bottom: b.bottom }
+        : { left: 60, width: 40, top: b.top, bottom: b.bottom };
     }
     btn.style.left = box.left + "%";
     btn.style.top = box.top + "%";
