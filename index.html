@@ -258,23 +258,29 @@
     height: auto;
   }
 
-  /* 价格后的加号按钮 */
+  /* 价格后的加号按钮：用线条绘制，视觉精确居中 */
   .plus-btn {
     position: absolute;
     z-index: 3;
     width: 16px;
     height: 16px;
     background: transparent;
-    color: #16a5a6;
-    font-size: 15px;
-    font-weight: 900;
-    line-height: 1;
-    display: grid;
-    place-items: center;
     transform: translate(-50%, -50%);
-    transition: transform .18s var(--ease-out), color .18s var(--ease-out);
+    transition: transform .18s var(--ease-out);
   }
-  .plus-btn:hover { color: #0f8a8b; transform: translate(-50%, -50%) scale(1.15); }
+  .plus-btn::before, .plus-btn::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: #16a5a6;
+    border-radius: 1px;
+    transform: translate(-50%, -50%);
+  }
+  .plus-btn::before { width: 10px; height: 1.6px; }
+  .plus-btn::after { width: 1.6px; height: 10px; }
+  .plus-btn:hover { transform: translate(-50%, -50%) scale(1.15); }
+  .plus-btn:hover::before, .plus-btn:hover::after { background: #0f8a8b; }
   .plus-btn:active { transform: translate(-50%, -50%) scale(0.9); }
   .plus-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
   .plus-btn .ptag {
